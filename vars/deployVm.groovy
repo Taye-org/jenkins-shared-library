@@ -11,17 +11,19 @@ def call(String branchName, String imageTag, String sshUser, String sshKeyPath, 
         return
     }
 
-    sh "chmod 600 $SSH_KEY_PATH"
+   sh "chmod 600 ${sshKeyPath}"
 
-    echo "Deploying Docker image to VM..."
-    sh """
-        ssh -o StrictHostKeyChecking=yes -i ${sshKeyPath} ${sshUser}@${vmIp} << EOF
-            cd /home/tayelolu/pythonapp2 &&
-            git fetch origin &&
-            git checkout ${branchName} &&
-            git pull origin ${branchName} &&
-            docker pull ${imageName}:${imageTag} &&
-            docker-compose -f ${composeFile} up -d
-        EOF
-    """
+echo "Deploying Docker image to VM..."
+
+sh """
+    ssh -o StrictHostKeyChecking=no -i ${sshKeyPath} ${sshUser}@${vmIp} << EOF
+        cd /home/tayelolu/pythonapp2 &&
+        git fetch origin &&
+        git checkout ${branchName} &&
+        git pull origin ${branchName} &&
+        docker pull ${imageName}:${imageTag} &&
+        docker-compose -f ${composeFile} up -d
+    EOF
+"""
+
 }
