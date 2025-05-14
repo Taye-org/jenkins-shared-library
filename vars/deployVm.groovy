@@ -11,7 +11,7 @@ def call(String branchName, String imageTag, String SSH_USER, String SSH_KEY_PAT
         return
     }
 
-    sh "chmod 600 $SSH_KEY_PATH"
+    sh "chmod 600 ${SSH_KEY_PATH}"
 
     echo "Deploying Docker image to VM..."
 
