@@ -16,18 +16,20 @@ def call(String branchName, String imageTag, String sshUser, String sshKeyPath, 
 echo "Deploying Docker image to VM..."
 
 sh """
-def command = """
-    ssh -o StrictHostKeyChecking=no -i ${SSH_KEY_PATH} ${SSH_USER}@${VM_IP} \
-    
-        cd /home/tayelolu/pythonapp2 && \
-        git fetch origin &&  \
-        git checkout ${branchName} && \
-        git pull origin ${branchName} && \
-        docker-compose down --volumes --remove-orphans
-        docker-compose build --no-cache
-        docker pull ${imageName}:${imageTag} && \
-        docker-compose -f ${composeFile} up -d  \
-    
+    def command = '''
+        ssh -o StrictHostKeyChecking=no -i ${SSH_KEY_PATH} ${SSH_USER}@${VM_IP} 'bash -s' 
+        cd /home/tayelolu/pythonapp2 &&
+        git fetch origin &&
+        git checkout ${branchName} &&
+        git pull origin ${branchName} &&
+        docker-compose down --volumes --remove-orphans &&
+        docker-compose build --no-cache &&
+        docker pull ${imageName}:${imageTag} &&
+        docker-compose -f ${composeFile} up -d
+        
+    '''
+    sh command
 """
+
 
 }
