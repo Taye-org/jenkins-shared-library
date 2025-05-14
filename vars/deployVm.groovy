@@ -28,7 +28,4 @@ ssh -o StrictHostKeyChecking=no -i ${SSH_KEY_PATH} ${SSH_USER}@${VM_IP} '
 '
 """
 
-    
-"""
-
 }
