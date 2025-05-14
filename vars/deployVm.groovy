@@ -10,7 +10,7 @@ def call(String branchName, String imageTag, String SSH_USER, String SSH_KEY_PAT
         echo "Branch ${branchName} has no deployment config."
         return
     }
-
+    echo "SSH Key Path: ${SSH_KEY_PATH}"
    sh """
      sh "chmod 600 ${SSH_KEY_PATH}"
     echo "Deploying Docker image to VM..."
