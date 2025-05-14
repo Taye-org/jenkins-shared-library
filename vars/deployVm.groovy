@@ -12,7 +12,7 @@ def call(String branchName, String imageTag, String SSH_USER, String SSH_KEY_PAT
     }
 
    sh """
-    chmod 600 ${SSH_KEY_PATH}
+    chmod "600 ${SSH_KEY_PATH}"
     echo "Deploying Docker image to VM..."
     ssh -o StrictHostKeyChecking=no -i ${SSH_KEY_PATH} ${SSH_USER}@${VM_IP} << EOF
         cd /home/${SSH_USER}/pythonapp2 &&
